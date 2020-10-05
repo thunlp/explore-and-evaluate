@@ -433,17 +433,6 @@ class AttConf(object):
 
 
 
-# log/AttributeValueNoAlias: The best hit@1 28.86 at 90 epoch with (0.006, 0, 0.0001)
-# log/AttributeValueConcate: The best hit@1 46.50 at 190 epoch with (0.006, 0, 0.0001)
-# log/AttributeEmbedding: The best hit@1 38.00 at 190 epoch with (0.006, 0, 0.0001)
-# AttributeEmbeddingTrans best hit@1 44.57 at 195 epoch with (0.003, 0, 0.0001)
-# Attribute Literal, The best hit@1 41.77 at 90 epoch with (0.006, 0, 0.0001)
-'''
-Structure Channel: Hit@1 41-43 with learning rate=0.007, l2=0.001
-Name Channel: Hit@1 65/77/89 with learning rate=0.007, l2=0.001
-Literal Channel: Hit@1 45/43/28 with learning rate=0.004 , l2=0
-Digit Channel: Hit@1 18/14/6 with learning rate=0.007, l2=0
-'''
 def grid_search(log_comment, data_set, layer_num, device, load_new_seed_split=False, save_model=False,
                 l2_regularization_range=(0, 1e-4, 1e-3), learning_rate_range=(1e-3, 4e-3, 7e-3),):
     # attribute + gcn literal:  Current best hit@1 42.90 at 100 epoch with (0.006, 0, 0)
@@ -503,18 +492,6 @@ def grid_search(log_comment, data_set, layer_num, device, load_new_seed_split=Fa
         att_conf.save_model()
 
 
-# log/AttributeValueNoAlias: The best hit@1 28.86 at 90 epoch with (0.006, 0, 0.0001)
-# log/AttributeValueConcate: The best hit@1 46.50 at 190 epoch with (0.006, 0, 0.0001)
-# log/AttributeEmbedding: The best hit@1 38.00 at 190 epoch with (0.006, 0, 0.0001)
-# AttributeEmbeddingTrans best hit@1 44.57 at 195 epoch with (0.003, 0, 0.0001)
-# Attribute Literal, The best hit@1 41.77 at 90 epoch with (0.006, 0, 0.0001)
-'''
-Recommend hyperparameter
-Structure Channel: Hit@1 41-43 with learning rate=0.006, l2=0.001
-Name Channel: Hit@1 65/77/89 with learning rate=0.006, l2=0.001
-Literal Channel: Hit@1 45/43/28 with learning rate=0.004 , l2=0
-Digit Channel: Hit@1 18/14/6 with learning rate=0.007, l2=0
-'''
 
 if __name__ == '__main__':
     '''

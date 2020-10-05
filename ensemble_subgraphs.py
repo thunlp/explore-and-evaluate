@@ -91,8 +91,6 @@ def generate_data(sims, ratio):
     return data, label
 
 
-## 两种方法，在sim上作测试，和在test data上做测试，都试一试；
-
 def ensemble_sims_with_svm(train_sims, valid_sims, test_sims, device, avg=False):
     set_random_seed()
 
@@ -161,11 +159,11 @@ def ensemble_sims_with_svm(train_sims, valid_sims, test_sims, device, avg=False)
     get_hits(test_sims, device=device)
 
 
-def ensemble_partial_sim_matrix(data_set, svm=False):
+def ensemble_partial_sim_matrix(data_set, svm=False, device='cpu'):
     def partial_get_hits(sim, top_k=(1, 10), kg='source', print_info=True):
         if isinstance(sim, np.ndarray):
             sim = torch.from_numpy(sim)
-        top_lr, mr_lr, mrr_lr = topk(sim, top_k)
+        top_lr, mr_lr, mrr_lr = topk(sim, top_k, device=device)
         if print_info:
             print_time_info('For each %s:' % kg, dash_top=True)
             print_time_info('MR: %.2f; MRR: %.2f%%.' % (mr_lr, mrr_lr))
@@ -190,8 +188,10 @@ def ensemble_partial_sim_matrix(data_set, svm=False):
         sim = sim / len(sim_path_list)
         return sim
 
+    data_set = data_set.split('DWY100k/')[1]
+
     # init sim_list
-    model_name_list = ['Literal', 'Structure', 'Digit', "Name"]
+    model_name_list = ['Literal', 'Structure', 'Digital', "Name"]
     sim_path_list = ["./log/grid_search_%s_%s/test_sim.npy" % (model, data_set) for model in model_name_list]
     sim_t_path_list = ["./log/grid_search_%s_%s/test_sim_t.npy" % (model, data_set) for model in model_name_list]
     if not svm:
@@ -231,7 +231,7 @@ def ensemble_partial_sim_matrix(data_set, svm=False):
         label = [1 for _ in range(len(positive_data))] + [0 for _ in range(len(negative_data))]
         label = np.asarray(label)
 
-        C_range = [1e-1, 1, 10, 1000]
+        C_range = [1e-6, 1e-5] #[1e-1, 1, 10, 1000]
         best_C = 0
         best_top1 = 0
         best_weight = None
@@ -255,7 +255,8 @@ def ensemble_partial_sim_matrix(data_set, svm=False):
                 target_sim = best_weight[idx][0] * load_partial_sim(sim_path)[0]
             else:
                 target_sim += best_weight[idx][0] * load_partial_sim(sim_path)[0]
-        partial_get_hits(-target_sim)
+        kg = 'source' if not T else 'target'
+        partial_get_hits(-target_sim, kg=kg)
 
     train_sim_path_list = ["./log/grid_search_%s_%s/train_sim.npy" % (model, data_set) for model in model_name_list]
     train_sim_t_path_list = ["./log/grid_search_%s_%s/train_sim_t.npy" % (model, data_set) for model in model_name_list]
@@ -304,14 +305,17 @@ if __name__ == '__main__':
 
     # bert_sim_train, bert_sim_valid, bert_sim_test = load_bert_sim(args.dataset, args.load_hard_split)
 
-    train_sims, valid_sims, test_sims = load_sim_matrices(args.dataset, ['Structure', 'Literal', 'Digital', 'Name'], args.load_hard_split)
-
-    if not args.svm:
-        # '''Ensemble with average pooling'''
-        # test_sims.append(bert_sim_test)
-        # test_sims = [sim_standardization(sim) for sim in test_sims]
-        # get_hits(sum(test_sims), device=device)
-        ensemble_sims_with_svm(train_sims, valid_sims, test_sims, device=device, avg=True)
-    else:
-        '''Ensemble with svm'''
-        ensemble_sims_with_svm(train_sims, valid_sims, test_sims, device=device)
+    if args.dataset.find('DBP15k') >= 0:
+        train_sims, valid_sims, test_sims = load_sim_matrices(args.dataset, ['Structure', 'Literal', 'Digital', 'Name'], args.load_hard_split)
+        
+        if not args.svm:
+            # '''Ensemble with average pooling'''
+            # test_sims.append(bert_sim_test)
+            # test_sims = [sim_standardization(sim) for sim in test_sims]
+            # get_hits(sum(test_sims), device=device)
+            ensemble_sims_with_svm(train_sims, valid_sims, test_sims, device=device, avg=True)
+        else:
+            '''Ensemble with svm'''
+            ensemble_sims_with_svm(train_sims, valid_sims, test_sims, device=device)
+    elif args.dataset.find('DWY100k') >= 0:
+        ensemble_partial_sim_matrix(args.dataset, svm=args.svm, device=device)
