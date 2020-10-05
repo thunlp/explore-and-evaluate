@@ -4,24 +4,30 @@ The code of our EMNLP2020 paper *Exploring and Evaluating Attributes, Values, an
 
 ## Dependencies
 
-* python 3
+* Python 3
 * [PyTorch >= 1.0](https://pytorch.org/get-started/locally/)
-* [sklearn](https://scikit-learn.org/stable/)
-* [huggingface/transformers 1.1.0](https://github.com/huggingface/transformers)
+* [Scikit Learn](https://scikit-learn.org/stable/)
+* [huggingface/transformers == 1.1.0](https://github.com/huggingface/transformers)
 
 ## Code
 
 1. Run the following scripts to train all the subgraphs.
 
 ```bash
->> python train_subgraph.py --gpu_id [GPU_id] --channel [choose from {Digital, Literal, Structure, Name}] --dataset [choose from {DBP15k/zh_en, DBP15k/fr_en, DBP15k/ja_en}] --load_hard_split [or not]
+# Example
+>> python train_subgraph.py --gpu_id 0 --channel Literal --dataset DBP15k/zh_en --load_hard_split [or not]
 ```
 
 2. Run the following scripts for ensemble.
 
 ```bash
->> python ensemble_subgraphs.py --gpu_id [GPU_id] --dataset [choose from {DBP15k/zh_en, DBP15k/fr_en, DBP15k/ja_en}] --svm [or not] --load_hard_split [or not]
+# Example
+>> python ensemble_subgraphs.py --gpu_id 0 --dataset DBP15k/zh_en --svm [or not] --load_hard_split [or not]
 ```
+
+Channels: {Digital, Literal, Structure, Name}
+
+Datasets: {DBP15k/zh_en, DBP15k/fr_en, DBP15k/ja_en, DWY100k/wd_dbp, DWY100k/yg_dbp}
 
 ## Datasets
 
