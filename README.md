@@ -11,14 +11,14 @@ The code of our EMNLP2020 paper *Exploring and Evaluating Attributes, Values, an
 
 ## Code
 
-1. Run the following scripts to train all the subgraphs.
+1. Run the following script to train all the subgraphs.
 
 ```bash
 # Example
 >> python train_subgraph.py --gpu_id 0 --channel Literal --dataset DBP15k/zh_en --load_hard_split [or not]
 ```
 
-2. Run the following scripts for ensemble.
+2. Run the following script for ensemble.
 
 ```bash
 # Example
@@ -32,6 +32,12 @@ Datasets: {DBP15k/zh_en, DBP15k/fr_en, DBP15k/ja_en, DWY100k/wd_dbp, DWY100k/yg_
 ## Datasets
 
 Download the datasets from [OneDrive](https://1drv.ms/u/s!AuQRz5abAH5T2jDOmiMlkqFP8s0Z?e=V6wNWS) and unzip it under the current folder.
+
+## Hard Experimental Setting
+
+The hard experimental setting aims to provide a more objective evaluation of the entity alignment task. We build a hard split of existing datasets and put seed entities with very different name in the test set.
+
+Download only the hard split of DBP15k from [OneDrive](https://1drv.ms/u/s!AuQRz5abAH5T3EWhCpZrw24jTOrm?e=ufjzfW).
 
 ## Reference
 
