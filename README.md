@@ -1,6 +1,6 @@
 # Exploring and Evaluating Attributes, Values, and Structures for Entity Alignment
 
-The code of our EMNLP2020 paper *Exploring and Evaluating Attributes, Values, and Structures for Entity Alignment*.
+The code of our EMNLP2020 paper *[Exploring and Evaluating Attributes, Values, and Structures for Entity Alignment](https://arxiv.org/abs/2010.03249)*.
 
 ## Dependencies
 
@@ -53,4 +53,5 @@ If you use the code, please cite our paper:
 ```
 
 ## Acknowledgement
+
 This research is supported by the National Research Foundation, Singapore under its International Research Centres in Singapore Funding Initiative. Any opinions, findings and conclusions or recommendations expressed in this material are those of the author(s) and do not reflect the views of National Research Foundation, Singapore.
