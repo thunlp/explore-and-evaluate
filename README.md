@@ -31,7 +31,7 @@ Datasets: {DBP15k/zh_en, DBP15k/fr_en, DBP15k/ja_en, DWY100k/wd_dbp, DWY100k/yg_
 
 ## Datasets
 
-Download the datasets from [OneDrive](https://1drv.ms/u/s!AuQRz5abAH5T2jDOmiMlkqFP8s0Z?e=V6wNWS) and unzip it under the current folder.
+Download the datasets from [OneDrive](https://1drv.ms/u/s!AuQRz5abAH5T2jDOmiMlkqFP8s0Z?e=1KMMFm) and unzip it under the current folder.
 
 ## Hard Experimental Setting
 
